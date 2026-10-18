@@ -1,18 +1,18 @@
 // ========================================================
 // 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE AI CODE PATCH
-// Generated: 2026-10-18 11:35:08
-// Prompt: "can the bunny basket fill up when it catches the items"
-// Game: catcher
+// Generated: 2026-10-18 11:36:25
+// Prompt: "Settings Synced"
+// Game: dodger
 // ========================================================
 
 window.VIBE_CONFIG = {
   "speed": 5,
-  "food": "\ud83d\udc30",
-  "theme": "neon",
+  "food": "\u2b50",
+  "theme": "cyberpunk",
   "ghostMode": true,
   "spellsApplied": [],
   "discoRainbow": false,
-  "game": "catcher"
+  "game": "dodger"
 };
 
 // Live Game Runtime Hooks
@@ -29,10 +29,10 @@ window.VIBE_CONFIG = {
 
   // 2. Broadcast to any open play.html or standalone tab
   try {
-    localStorage.setItem('vibe_state_catcher', JSON.stringify(cfg));
-    localStorage.setItem('vibe_last_prompt', "can the bunny basket fill up when it catches the items");
+    localStorage.setItem('vibe_state_dodger', JSON.stringify(cfg));
+    localStorage.setItem('vibe_last_prompt', "Settings Synced");
     window.dispatchEvent(new CustomEvent('vibeUpdate', { detail: cfg }));
   } catch (e) {}
 
-  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "can the bunny basket fill up when it catches the items");
+  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Settings Synced");
 })();
