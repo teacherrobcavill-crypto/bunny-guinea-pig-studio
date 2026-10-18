@@ -1,14 +1,15 @@
 {
-  "prompt": "Settings Synced",
+  "prompt": "Surprise mix with \ud83e\udd66 treats, cyberpunk colors, and level 8 speed!",
   "game": "blocks",
   "config": {
-    "speed": 5,
-    "food": "\ud83e\udd55",
+    "speed": 8,
+    "food": "\ud83e\udd66",
     "theme": "cyberpunk",
     "ghostMode": true,
     "spellsApplied": [],
-    "discoRainbow": false,
-    "game": "blocks"
+    "discoRainbow": true,
+    "game": "blocks",
+    "customColors": null
   },
-  "timestamp": "2026-10-18 11:36:44"
+  "timestamp": "2026-10-18 11:36:55"
 }

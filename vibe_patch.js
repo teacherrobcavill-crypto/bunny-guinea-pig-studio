@@ -1,18 +1,19 @@
 // ========================================================
 // 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE AI CODE PATCH
-// Generated: 2026-10-18 11:36:44
-// Prompt: "Settings Synced"
+// Generated: 2026-10-18 11:36:55
+// Prompt: "Surprise mix with 🥦 treats, cyberpunk colors, and level 8 speed!"
 // Game: blocks
 // ========================================================
 
 window.VIBE_CONFIG = {
-  "speed": 5,
-  "food": "\ud83e\udd55",
+  "speed": 8,
+  "food": "\ud83e\udd66",
   "theme": "cyberpunk",
   "ghostMode": true,
   "spellsApplied": [],
-  "discoRainbow": false,
-  "game": "blocks"
+  "discoRainbow": true,
+  "game": "blocks",
+  "customColors": null
 };
 
 // Live Game Runtime Hooks
@@ -30,9 +31,9 @@ window.VIBE_CONFIG = {
   // 2. Broadcast to any open play.html or standalone tab
   try {
     localStorage.setItem('vibe_state_blocks', JSON.stringify(cfg));
-    localStorage.setItem('vibe_last_prompt', "Settings Synced");
+    localStorage.setItem('vibe_last_prompt', "Surprise mix with 🥦 treats, cyberpunk colors, and level 8 speed!");
     window.dispatchEvent(new CustomEvent('vibeUpdate', { detail: cfg }));
   } catch (e) {}
 
-  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Settings Synced");
+  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Surprise mix with 🥦 treats, cyberpunk colors, and level 8 speed!");
 })();
