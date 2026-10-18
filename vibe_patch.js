@@ -1,30 +1,37 @@
-// Antigravity Kids Vibe Patch - Auto-generated 2026-10-18 10:48:53
+// ========================================================
+// 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE AI CODE PATCH
+// Generated: 2026-10-18 11:25:08
+// Prompt: "Turn treats into crunchy garden carrots and activate super bunny hop speed!"
+// Game: catcher
+// ========================================================
+
 window.VIBE_CONFIG = {
-  "speed": 5,
+  "speed": 8,
   "food": "\ud83e\udd55",
-  "theme": "gold",
+  "theme": "neon",
   "ghostMode": true,
-  "spellsApplied": []
+  "discoRainbow": false,
+  "game": "catcher"
 };
 
-// ========================================================
-// 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE VIBE CODE PATCH
-// Generated: 18/10/2026, 10:48:53
-// Prompt: "Settings Synced"
-// Target: Pip's Piggy Pong
-// ========================================================
+// Live Game Runtime Hooks
+(function() {
+  const cfg = window.VIBE_CONFIG;
+  if (!cfg) return;
 
-window.VIBE_CONFIG = {
-  "speed": 5,
-  "food": "🥕",
-  "theme": "gold",
-  "ghostMode": true,
-  "spellsApplied": []
-};
+  // 1. Neon Snake Engine hooks
+  if (window.game) {
+    if (cfg.food && window.game.customFoodEmoji !== undefined) window.game.customFoodEmoji = cfg.food;
+    if (cfg.speed && window.game.setSpeedLevel) window.game.setSpeedLevel(cfg.speed, false);
+    if (cfg.theme && window.game.applyTheme) window.game.applyTheme(cfg.theme === 'candy' ? 'cyberpunk' : cfg.theme);
+  }
 
-// Real game hooks:
-if (window.SnakeGame && window.game) {
-  if (window.VIBE_CONFIG.food) window.game.customFoodEmoji = "🥕";
-  if (window.VIBE_CONFIG.speed) window.game.setSpeedLevel(5, false);
-}
-console.log("🥕 [VIBE PATCH] Active config pushed successfully!");
+  // 2. Broadcast to any open play.html or standalone tab
+  try {
+    localStorage.setItem('vibe_state_catcher', JSON.stringify(cfg));
+    localStorage.setItem('vibe_last_prompt', "Turn treats into crunchy garden carrots and activate super bunny hop speed!");
+    window.dispatchEvent(new CustomEvent('vibeUpdate', { detail: cfg }));
+  } catch (e) {}
+
+  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Turn treats into crunchy garden carrots and activate super bunny hop speed!");
+})();
