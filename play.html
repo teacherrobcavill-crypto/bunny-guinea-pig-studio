@@ -301,6 +301,7 @@
 
     </div>
 
+    <script src="vibe_patch.js"></script>
     <script>
         // Sound Synthesis Controller
         class PlaySound {
@@ -370,6 +371,19 @@
             const saved = localStorage.getItem('vibe_state_' + gameMode) || localStorage.getItem('vibe_state_custom');
             if (saved) vibeState = Object.assign(vibeState, JSON.parse(saved));
         } catch(e) {}
+        if (window.VIBE_CONFIG) {
+            vibeState = Object.assign(vibeState, window.VIBE_CONFIG);
+        }
+        window.addEventListener('vibeUpdate', (e) => {
+            if (e.detail) {
+                Object.assign(vibeState, e.detail);
+                if (e.detail.food && hudEmoji) hudEmoji.textContent = e.detail.food;
+                if (e.detail.speed) {
+                    catcher.speed = 8 + vibeState.speed * 0.4;
+                    dodger.speed = 8 + vibeState.speed * 0.4;
+                }
+            }
+        });
 
         const canvas = document.getElementById('play-canvas');
         const ctx = canvas.getContext('2d');
