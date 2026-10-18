@@ -1,17 +1,23 @@
 // ========================================================
 // 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE AI CODE PATCH
-// Generated: 2026-10-18 11:25:08
-// Prompt: "Turn treats into crunchy garden carrots and activate super bunny hop speed!"
+// Generated: 2026-10-18 11:27:21
+// Prompt: "Turn snacks into sweet pink strawberries and activate disco rainbow party mode!"
 // Game: catcher
 // ========================================================
 
 window.VIBE_CONFIG = {
-  "speed": 8,
-  "food": "\ud83e\udd55",
-  "theme": "neon",
+  "speed": 5,
+  "food": "\ud83c\udf53",
+  "theme": "candy",
   "ghostMode": true,
-  "discoRainbow": false,
-  "game": "catcher"
+  "discoRainbow": true,
+  "game": "catcher",
+  "customColors": {
+    "head": "#ffffff",
+    "body": "#ec4899",
+    "glow": "#f472b6",
+    "bg": "#120417"
+  }
 };
 
 // Live Game Runtime Hooks
@@ -29,9 +35,9 @@ window.VIBE_CONFIG = {
   // 2. Broadcast to any open play.html or standalone tab
   try {
     localStorage.setItem('vibe_state_catcher', JSON.stringify(cfg));
-    localStorage.setItem('vibe_last_prompt', "Turn treats into crunchy garden carrots and activate super bunny hop speed!");
+    localStorage.setItem('vibe_last_prompt', "Turn snacks into sweet pink strawberries and activate disco rainbow party mode!");
     window.dispatchEvent(new CustomEvent('vibeUpdate', { detail: cfg }));
   } catch (e) {}
 
-  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Turn treats into crunchy garden carrots and activate super bunny hop speed!");
+  console.log("🥕 [BARNABY & PIP AI] Successfully applied fluffy update:", "Turn snacks into sweet pink strawberries and activate disco rainbow party mode!");
 })();

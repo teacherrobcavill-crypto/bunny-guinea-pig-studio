@@ -1,13 +1,19 @@
 {
-  "prompt": "Turn treats into crunchy garden carrots and activate super bunny hop speed!",
+  "prompt": "Turn snacks into sweet pink strawberries and activate disco rainbow party mode!",
   "game": "catcher",
   "config": {
-    "speed": 8,
-    "food": "\ud83e\udd55",
-    "theme": "neon",
+    "speed": 5,
+    "food": "\ud83c\udf53",
+    "theme": "candy",
     "ghostMode": true,
-    "discoRainbow": false,
-    "game": "catcher"
+    "discoRainbow": true,
+    "game": "catcher",
+    "customColors": {
+      "head": "#ffffff",
+      "body": "#ec4899",
+      "glow": "#f472b6",
+      "bg": "#120417"
+    }
   },
-  "timestamp": "2026-10-18 11:25:08"
+  "timestamp": "2026-10-18 11:27:21"
 }
