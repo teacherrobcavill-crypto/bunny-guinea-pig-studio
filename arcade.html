@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Retro & RPG Web Arcade Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Outfit:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a080d;
+            --card-bg: #14101a;
+            --card-border: #2e233d;
+            --accent-gold: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #a855f7;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 10% 40%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-main);
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+        }
+
+        .hub-container {
+            max-width: 1080px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Header */
+        .arcade-header {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+
+        .arcade-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            color: #d8b4fe;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .arcade-title {
+            font-size: clamp(28px, 6vw, 44px);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 30%, #cbd5e1 70%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .arcade-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(14px, 3.5vw, 17px);
+            margin-top: 8px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 24px;
+        }
+
+        /* Game Card */
+        .game-card {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .game-card.featured {
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 10px 35px rgba(245, 158, 11, 0.15);
+        }
+
+        .game-card.featured:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 16px 45px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Card Visual / Thumbnail */
+        .card-preview {
+            height: 180px;
+            background: #1e1728;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .game-card:hover .card-preview img {
+            transform: scale(1.05);
+        }
+
+        .preview-graphic {
+            font-size: 72px;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(10, 8, 13, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-tag.gold {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            border-color: #fef08a;
+            color: #fff;
+        }
+
+        .card-tag.cyan {
+            background: linear-gradient(135deg, #0e7490, #06b6d4);
+            border-color: #a5f3fc;
+            color: #fff;
+        }
+
+        .card-tag.green {
+            background: linear-gradient(135deg, #047857, #10b981);
+            border-color: #a7f3d0;
+            color: #fff;
+        }
+
+        /* Card Content */
+        .card-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 12px;
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 26px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        /* Feature Pills */
+        .card-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .pill-feature {
+            background: #1e172a;
+            border: 1px solid #332742;
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        /* Play Button */
+        .btn-launch-game {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            color: #fff;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            border: 1px solid #fbbf24;
+            color: #fff;
+        }
+        .btn-gold:hover { background: linear-gradient(135deg, #d97706, #f59e0b); }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #6b21a8, #8b5cf6);
+            border: 1px solid #c084fc;
+        }
+        .btn-purple:hover { background: linear-gradient(135deg, #7e22ce, #9333ea); }
+
+        .btn-green {
+            background: linear-gradient(135deg, #047857, #059669);
+            border: 1px solid #34d399;
+        }
+        .btn-green:hover { background: linear-gradient(135deg, #059669, #10b981); }
+
+        /* Footer */
+        .arcade-footer {
+            text-align: center;
+            padding-top: 16px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .footer-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #14101b;
+            border: 1px solid #281d36;
+            padding: 6px 14px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="hub-container">
+        
+        <!-- Header -->
+        <header class="arcade-header">
+            <div class="arcade-badge">⚡ Web Arcade & RPG Suite</div>
+            <h1 class="arcade-title">Arcade Game Portal</h1>
+            <p class="arcade-subtitle">Instant-play web games with responsive touch controls, procedural Web Audio, and mobile immersion.</p>
+        </header>
+
+        <!-- Bunny & Guinea Pig Vibe Studio Feature Banner -->
+        <aside style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(245, 158, 11, 0.2)); border: 2px solid #ec4899; border-radius: 20px; padding: 18px 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="font-size: 42px;">🐰🐹</div>
+                <div>
+                    <div style="font-size: 11px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px;">Kid Creator Mode • Barnaby & Pip</div>
+                    <h2 style="font-size: clamp(18px, 4.5vw, 24px); font-weight: 800; color: #fff;">Bunny &amp; Guinea Pig Vibe Studio</h2>
+                    <p style="font-size: 13px; color: #cbd5e1; margin-top: 2px;">Create brand new games or vibe code games with carrots, lettuce treats, rainbow trails, and magic prompts!</p>
+                </div>
+            </div>
+            <a href="index.html" style="background: linear-gradient(135deg, #ec4899, #f59e0b); color: #fff; text-decoration: none; font-weight: 800; font-size: 15px; padding: 12px 22px; border-radius: 14px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);">
+                <span>Launch Bunny Studio 🐰✨</span>
+                <span>➔</span>
+            </a>
+        </aside>
+
+        <!-- Games Grid -->
+        <section class="games-grid">
+
+            <!-- 1. FIGHTING FANTASY: THE VAULT OF THE IRON WARLOCK -->
+            <article class="game-card featured">
+                <div class="card-preview">
+                    <img src="fighting-fantasy/images/citadel_maw.jpg" alt="The Vault of the Iron Warlock">
+                    <span class="card-tag gold">★ NEW RELEASE</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title-row">
+                        <span class="card-icon">🐉</span>
+                        <h2 class="card-title">Fighting Fantasy: Titan Reborn</h2>
+                    </div>
+                    <p class="card-desc">
+                        Full digital evolution of Steve Jackson & Ian Livingstone's gamebooks. 58 branching sections, World of Warcraft-style hybrid combat, 3D dice physics, interactive SVG automap, and Sir Ian McKellen theatrical audio narration!
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill-feature">📖 58 Chapters</span>
+                        <span class="pill-feature">⚔️ WoW Combat</span>
+                        <span class="pill-feature">🎙️ Voice Narrated</span>
+                        <span class="pill-feature">🎲 3D Dice</span>
+                        <span class="pill-feature">📱 iPhone Ready</span>
+                    </div>
+                    <a href="fighting-fantasy/index.html" class="btn-launch-game btn-gold">
+                        <span>Play Adventure Tome</span>
+                        <span>➔</span>
+                    </a>
+                </div>
+            </article>
+
+            <!-- 2. BLOCK BLAST ARCADE -->
+            <article class="game-card">
+                <div class="card-preview" style="background: linear-gradient(135deg, #1e1b4b, #312e81);">
+                    <div class="preview-graphic">💥</div>
+                    <span class="card-tag cyan">PUZZLE ARCADE</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title-row">
+                        <span class="card-icon">💥</span>
+                        <h2 class="card-title">Block Blast Arcade</h2>
+                    </div>
+                    <p class="card-desc">
+                        Faithful 8×8 grid block puzzle arcade. Features combo streak multipliers, procedural Web Audio chords that scale with your streak, screen shake, 4 themes, and touch drag placement.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill-feature">🧩 8×8 Grid</span>
+                        <span class="pill-feature">🔥 Combos</span>
+                        <span class="pill-feature">🎵 Audio Synthesis</span>
+                        <span class="pill-feature">🎨 4 Themes</span>
+                    </div>
+                    <a href="block-blast/index.html" class="btn-launch-game btn-purple">
+                        <span>Play Block Blast</span>
+                        <span>➔</span>
+                    </a>
+                </div>
+            </article>
+
+            <!-- 3. NEON SNAKE ARCADE -->
+            <article class="game-card">
+                <div class="card-preview" style="background: linear-gradient(135deg, #064e3b, #065f46);">
+                    <div class="preview-graphic">🐍</div>
+                    <span class="card-tag green">CLASSIC RETRO</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-title-row">
+                        <span class="card-icon">🐍</span>
+                        <h2 class="card-title">Neon Snake Arcade</h2>
+                    </div>
+                    <p class="card-desc">
+                        Fluid neon snake arcade with body gradient interpolation, direction-aware eyes, procedural audio clicks, golden bonus stars, real-time speed slider, and zero-dependency terminal CLI.
+                    </p>
+                    <div class="card-pills">
+                        <span class="pill-feature">⚡ Speed Slider</span>
+                        <span class="pill-feature">⭐ Star Bonuses</span>
+                        <span class="pill-feature">🔊 SFX</span>
+                        <span class="pill-feature">📱 Swipe Controls</span>
+                    </div>
+                    <a href="neon-snake/index.html" class="btn-launch-game btn-green">
+                        <span>Play Neon Snake</span>
+                        <span>➔</span>
+                    </a>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="arcade-footer">
+            <div class="footer-note">
+                <span>🌐 Hosted locally on your Mac & accessible worldwide via Cloudflare Quick Tunnel</span>
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>

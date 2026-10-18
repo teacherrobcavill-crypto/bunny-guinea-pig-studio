@@ -384,7 +384,9 @@ class SnakeGame {
 
   applyTheme(theme) {
     document.body.setAttribute('data-theme', theme);
-    this.themeName.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+    if (this.themeName) {
+      this.themeName.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
     localStorage.setItem('neon_snake_theme', theme);
   }
 
@@ -397,8 +399,12 @@ class SnakeGame {
 
   toggleSound() {
     const on = this.sound.toggle();
-    this.soundIcon.textContent = on ? '🔊' : '🔇';
-    this.soundLabel.textContent = on ? 'SFX On' : 'Muted';
+    if (this.soundIcon) {
+      this.soundIcon.textContent = on ? '🔊' : '🔇';
+    }
+    if (this.soundLabel) {
+      this.soundLabel.textContent = on ? 'SFX On' : 'Muted';
+    }
     if (on) this.sound.playClick();
   }
 
@@ -1334,6 +1340,12 @@ class SnakeGame {
 }
 
 // Instantiate game on DOMContentLoaded
+window.SnakeGame = SnakeGame;
 window.addEventListener('DOMContentLoaded', () => {
-  new SnakeGame();
+  window.game = new SnakeGame();
+  // Apply any active Vibe Config if loaded
+  if (window.VIBE_CONFIG) {
+    if (window.VIBE_CONFIG.food) window.game.customFoodEmoji = window.VIBE_CONFIG.food;
+    if (window.VIBE_CONFIG.speed) window.game.setSpeedLevel(window.VIBE_CONFIG.speed, false);
+  }
 });

@@ -1126,8 +1126,8 @@
                     <span id="sound-icon">🔊</span>
                     <span id="sound-text">Sound ON</span>
                 </button>
-                <a href="index.html" class="btn-home" title="Arcade Hub">
-                    <span>🕹️ Hub</span>
+                <a href="arcade.html" class="btn-home" title="Classic Retro Arcade Hub">
+                    <span>🕹️ Classic Arcade</span>
                 </a>
             </div>
         </header>
@@ -1573,7 +1573,10 @@
                             <span>🎮 Live Playground</span>
                             <span id="sandbox-status-badge" style="font-size: 11px; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #10b981; padding: 2px 8px; border-radius: 8px; font-weight: 700;">● Shield Active</span>
                         </div>
-                        <div style="display: flex; gap: 6px;">
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <a class="btn-action btn-rainbow" id="btn-play-standalone" href="play.html?game=catcher" target="_blank" style="padding: 5px 12px; font-size: 12px; text-decoration: none;" title="Play Fullscreen in New Window">
+                                <span>🚀 Play Fullscreen</span>
+                            </a>
                             <button class="btn-action" id="btn-toggle-cruise" style="padding: 5px 10px; font-size: 12px;">
                                 <span id="cruise-btn-label">🐰 Bunny Hop ON</span>
                             </button>
@@ -1870,7 +1873,7 @@
             catcher: {
                 name: "Meadow Carrot Catcher",
                 emoji: "🥕",
-                fullUrl: "neon-snake/index.html",
+                fullUrl: "play.html?game=catcher",
                 isNewGame: true,
                 defaultVibe: {
                     speed: 5,
@@ -1889,7 +1892,7 @@
             dodger: {
                 name: "Fluffy Space Dodger",
                 emoji: "🚀",
-                fullUrl: "block-blast/index.html",
+                fullUrl: "play.html?game=dodger",
                 isNewGame: true,
                 defaultVibe: {
                     speed: 5,
@@ -1908,7 +1911,7 @@
             pong: {
                 name: "Pip's Piggy Pong",
                 emoji: "🏓",
-                fullUrl: "neon-snake/index.html",
+                fullUrl: "play.html?game=pong",
                 isNewGame: true,
                 defaultVibe: {
                     speed: 5,
@@ -3016,6 +3019,8 @@
             activeGameEmoji.textContent = config.emoji;
             activeGameName.textContent = config.name + " Vibe Studio";
             btnPlayFull.href = config.fullUrl;
+            const btnPlayStandalone = document.getElementById('btn-play-standalone');
+            if (btnPlayStandalone) btnPlayStandalone.href = config.fullUrl;
 
             // Adapt controls bar to game type
             if (gameKey === 'snake') {
@@ -3545,7 +3550,7 @@ console.log("🥕 [VIBE PATCH] Active config pushed successfully!");`;
             GAME_CONFIGS.custom = {
                 name: "Kid's Vibe: " + gameTitle,
                 emoji: parsed.food || "✨",
-                fullUrl: "neon-snake/index.html",
+                fullUrl: "play.html?game=custom",
                 isNewGame: true,
                 defaultVibe: {
                     speed: parsed.speed || 6,

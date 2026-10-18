@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Barnaby & Pip's Play Arena</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090614;
+            --pink: #ec4899;
+            --amber: #f59e0b;
+            --emerald: #10b981;
+            --cyan: #06b6d4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-dark);
+            font-family: 'Fredoka', 'Outfit', sans-serif;
+            color: #fff;
+        }
+
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Top Header Bar */
+        .arcade-header {
+            height: 56px;
+            background: rgba(18, 12, 34, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(236, 72, 153, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 50;
+            flex-shrink: 0;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: var(--pink);
+        }
+
+        .game-title-badge {
+            font-size: 16px;
+            font-weight: 800;
+            color: #facc15;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #ec4899, #f59e0b);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Main Canvas */
+        .canvas-wrapper {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #04020a;
+            overflow: hidden;
+        }
+
+        #play-canvas {
+            display: block;
+            touch-action: none;
+            cursor: pointer;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Mobile On-Screen Touch Bar */
+        .touch-controls {
+            position: absolute;
+            bottom: max(16px, env(safe-area-inset-bottom));
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        .touch-btn-cluster {
+            display: flex;
+            gap: 14px;
+            pointer-events: auto;
+        }
+
+        .touch-action-btn {
+            width: 68px;
+            height: 68px;
+            border-radius: 22px;
+            background: rgba(25, 18, 45, 0.85);
+            border: 2px solid rgba(236, 72, 153, 0.5);
+            color: #fff;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            touch-action: manipulation;
+            transition: transform 0.1s, background 0.1s;
+        }
+
+        .touch-action-btn:active {
+            transform: scale(0.92);
+            background: rgba(236, 72, 153, 0.4);
+            border-color: #ec4899;
+        }
+
+        /* Game Over / Pause Overlay */
+        .arcade-modal {
+            position: absolute;
+            inset: 0;
+            background: rgba(4, 2, 12, 0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            gap: 16px;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .arcade-modal.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #181226;
+            border: 3px solid var(--pink);
+            border-radius: 24px;
+            padding: 28px 36px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.35);
+        }
+
+        .modal-emoji {
+            font-size: 54px;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            color: #cbd5e1;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-modal-action {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s;
+        }
+
+        .btn-modal-action:active {
+            transform: scale(0.96);
+        }
+
+        .btn-play-again {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-back-studio {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        
+        <!-- Header -->
+        <header class="arcade-header">
+            <div class="header-left">
+                <a href="index.html" class="btn-nav">
+                    <span>🐰 Studio</span>
+                </a>
+                <span class="game-title-badge" id="hud-game-name">
+                    <span id="hud-emoji">🥕</span> <span id="hud-title">Meadow Catcher</span>
+                </span>
+            </div>
+            <div class="header-right">
+                <div class="score-badge" id="hud-score">Score: 0</div>
+                <button class="btn-nav" id="btn-sound-toggle" title="Toggle Sound">🔊</button>
+            </div>
+        </header>
+
+        <!-- Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="play-canvas"></canvas>
+        </div>
+
+        <!-- Touch Controls Bar -->
+        <div class="touch-controls">
+            <div class="touch-btn-cluster">
+                <button class="touch-action-btn" id="btn-touch-left">⬅️</button>
+                <button class="touch-action-btn" id="btn-touch-right">➡️</button>
+            </div>
+            <div class="touch-btn-cluster">
+                <button class="touch-action-btn" id="btn-touch-action">✨</button>
+                <button class="touch-action-btn" id="btn-touch-pause">⏸️</button>
+            </div>
+        </div>
+
+        <!-- Pause / Game Over Modal -->
+        <div class="arcade-modal" id="game-modal">
+            <div class="modal-card">
+                <div class="modal-emoji" id="modal-emoji">🐰✨</div>
+                <h2 class="modal-title" id="modal-title">Game Paused</h2>
+                <p class="modal-subtitle" id="modal-subtitle">Ready to hop back in?</p>
+                <button class="btn-modal-action btn-play-again" id="btn-modal-resume">
+                    <span>Resume Game ▶️</span>
+                </button>
+                <a href="index.html" class="btn-modal-action btn-back-studio">
+                    <span>Back to Vibe Studio 🐰</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Sound Synthesis Controller
+        class PlaySound {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) this.ctx = new AudioCtx();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+            }
+            toggle() {
+                this.muted = !this.muted;
+                return !this.muted;
+            }
+            playTone(freq, dur, type = 'sine') {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + dur);
+            }
+            playCatch() {
+                this.playTone(520, 0.08, 'triangle');
+                setTimeout(() => this.playTone(780, 0.12, 'sine'), 50);
+            }
+            playHop() {
+                this.playTone(340, 0.1, 'sine');
+            }
+            playLaser() {
+                this.playTone(880, 0.08, 'sawtooth');
+            }
+        }
+
+        const sound = new PlaySound();
+        const urlParams = new URLSearchParams(window.location.search);
+        let gameMode = urlParams.get('game') || 'catcher';
+
+        // Redirect classic multi-page games if requested
+        if (gameMode === 'snake') {
+            window.location.replace('neon-snake/index.html');
+        } else if (gameMode === 'blocks') {
+            window.location.replace('block-blast/index.html');
+        } else if (gameMode === 'rpg') {
+            window.location.replace('fighting-fantasy/index.html');
+        }
+
+        // Saved Vibe State
+        let vibeState = {
+            speed: 5,
+            food: '🥕',
+            theme: 'neon',
+            spellsApplied: []
+        };
+        try {
+            const saved = localStorage.getItem('vibe_state_' + gameMode) || localStorage.getItem('vibe_state_custom');
+            if (saved) vibeState = Object.assign(vibeState, JSON.parse(saved));
+        } catch(e) {}
+
+        const canvas = document.getElementById('play-canvas');
+        const ctx = canvas.getContext('2d');
+        const hudGameName = document.getElementById('hud-game-name');
+        const hudEmoji = document.getElementById('hud-emoji');
+        const hudTitle = document.getElementById('hud-title');
+        const hudScore = document.getElementById('hud-score');
+        const btnSoundToggle = document.getElementById('btn-sound-toggle');
+
+        // Setup titles
+        const titles = {
+            catcher: { name: "Meadow Carrot Catcher", emoji: "🥕" },
+            dodger: { name: "Fluffy Space Dodger", emoji: "🚀" },
+            pong: { name: "Pip's Piggy Pong", emoji: "🏓" },
+            custom: { name: "Magic Custom Studio Game", emoji: "✨" }
+        };
+        const currentMeta = titles[gameMode] || titles.catcher;
+        hudEmoji.textContent = currentMeta.emoji;
+        hudTitle.textContent = currentMeta.name;
+        document.title = `${currentMeta.emoji} ${currentMeta.name} - Bunny & Pip Arcade`;
+
+        btnSoundToggle.addEventListener('click', () => {
+            const on = sound.toggle();
+            btnSoundToggle.textContent = on ? '🔊' : '🔇';
+        });
+
+        // Resize Canvas to Fullscreen Aspect
+        function resizeCanvas() {
+            const wrapper = document.querySelector('.canvas-wrapper');
+            const w = wrapper.clientWidth;
+            const h = wrapper.clientHeight;
+            canvas.width = Math.min(800, w);
+            canvas.height = Math.min(900, h);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Game State Engine
+        let score = 0;
+        let isPaused = false;
+        let particles = [];
+        let bannerText = null;
+        let bannerTimer = 0;
+        let dirX = 0;
+
+        // Catcher State
+        let catcher = { x: canvas.width / 2, width: 70, speed: 8 + vibeState.speed * 0.4 };
+        let fallingItems = [];
+        let lastSpawn = 0;
+
+        // Dodger State
+        let dodger = { x: canvas.width / 2, width: 48, speed: 8 + vibeState.speed * 0.4 };
+        let spaceHazards = [];
+
+        // Pong State
+        let pong = {
+            playerX: canvas.width / 2 - 40,
+            paddleW: 80,
+            paddleH: 14,
+            aiX: canvas.width / 2 - 40,
+            ballX: canvas.width / 2,
+            ballY: canvas.height / 2,
+            vx: 3.5,
+            vy: 3.5
+        };
+
+        function spawnParticles(x, y, count = 12, colors = ['#f59e0b', '#ec4899', '#10b981', '#facc15', '#06b6d4']) {
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 4 + 1.5;
+                particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 25
+                });
+            }
+        }
+
+        // Input Bindings
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') dirX = -1;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') dirX = 1;
+            if (e.key === ' ' || e.key === 'p' || e.key === 'P') togglePause();
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (['ArrowLeft', 'ArrowRight', 'a', 'd', 'A', 'D'].includes(e.key)) dirX = 0;
+        });
+
+        // Touch & Drag Handling
+        let isDragging = false;
+        function updatePlayerPos(clientX) {
+            const rect = canvas.getBoundingClientRect();
+            const relX = clientX - rect.left;
+            const scaledX = relX * (canvas.width / rect.width);
+            if (gameMode === 'catcher' || gameMode === 'custom') {
+                catcher.x = Math.max(35, Math.min(canvas.width - 35, scaledX));
+            } else if (gameMode === 'dodger') {
+                dodger.x = Math.max(25, Math.min(canvas.width - 25, scaledX));
+            } else if (gameMode === 'pong') {
+                pong.playerX = Math.max(10, Math.min(canvas.width - pong.paddleW - 10, scaledX - pong.paddleW / 2));
+            }
+        }
+
+        canvas.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            updatePlayerPos(e.clientX);
+        });
+        window.addEventListener('pointermove', (e) => {
+            if (isDragging) updatePlayerPos(e.clientX);
+        });
+        window.addEventListener('pointerup', () => isDragging = false);
+
+        // On-screen touch buttons
+        const btnLeft = document.getElementById('btn-touch-left');
+        const btnRight = document.getElementById('btn-touch-right');
+        const btnAction = document.getElementById('btn-touch-action');
+        const btnPause = document.getElementById('btn-touch-pause');
+
+        btnLeft.addEventListener('pointerdown', (e) => { e.preventDefault(); dirX = -1; });
+        btnLeft.addEventListener('pointerup', () => dirX = 0);
+        btnRight.addEventListener('pointerdown', (e) => { e.preventDefault(); dirX = 1; });
+        btnRight.addEventListener('pointerup', () => dirX = 0);
+        btnPause.addEventListener('click', togglePause);
+        btnAction.addEventListener('click', () => {
+            sound.playHop();
+            bannerText = "🐰 BARNABY TURBO HOP! 🐹";
+            bannerTimer = 45;
+            spawnParticles(canvas.width / 2, canvas.height / 2, 20);
+        });
+
+        // Pause Modal
+        const modal = document.getElementById('game-modal');
+        const btnModalResume = document.getElementById('btn-modal-resume');
+        function togglePause() {
+            isPaused = !isPaused;
+            modal.classList.toggle('active', isPaused);
+        }
+        btnModalResume.addEventListener('click', togglePause);
+
+        // Main Loop
+        function update(time) {
+            if (isPaused) return;
+
+            // Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+
+            if (bannerTimer > 0) bannerTimer--;
+
+            // Move player via buttons/keys
+            if (dirX !== 0) {
+                if (gameMode === 'catcher' || gameMode === 'custom') {
+                    catcher.x = Math.max(35, Math.min(canvas.width - 35, catcher.x + dirX * catcher.speed));
+                } else if (gameMode === 'dodger') {
+                    dodger.x = Math.max(25, Math.min(canvas.width - 25, dodger.x + dirX * dodger.speed));
+                } else if (gameMode === 'pong') {
+                    pong.playerX = Math.max(10, Math.min(canvas.width - pong.paddleW - 10, pong.playerX + dirX * 9));
+                }
+            }
+
+            // Game Mode Logic
+            if (gameMode === 'catcher' || gameMode === 'custom') {
+                updateCatcher(time);
+            } else if (gameMode === 'dodger') {
+                updateDodger(time);
+            } else if (gameMode === 'pong') {
+                updatePong(time);
+            }
+
+            hudScore.textContent = `Score: ${score}`;
+        }
+
+        function updateCatcher(time) {
+            const interval = Math.max(340, 900 - (vibeState.speed * 50));
+            if (time - lastSpawn > interval) {
+                lastSpawn = time;
+                const goods = [vibeState.food || '🥕', '🥕', '🍓', '🥬', '🍀', '🍎', '⭐'];
+                const hazards = ['🌧️', '🪨'];
+                const isHazard = Math.random() < 0.18;
+                fallingItems.push({
+                    x: Math.random() * (canvas.width - 60) + 30,
+                    y: -25,
+                    vy: 2.5 + vibeState.speed * 0.45,
+                    emoji: isHazard ? hazards[Math.floor(Math.random() * hazards.length)] : goods[Math.floor(Math.random() * goods.length)],
+                    isHazard: isHazard
+                });
+            }
+
+            const basketY = canvas.height - 40;
+            for (let i = fallingItems.length - 1; i >= 0; i--) {
+                const item = fallingItems[i];
+                item.y += item.vy;
+
+                if (item.y >= basketY - 20 && item.y <= basketY + 20 && Math.abs(item.x - catcher.x) < 40) {
+                    if (!item.isHazard) {
+                        score += 10;
+                        sound.playCatch();
+                        spawnParticles(item.x, item.y, 10);
+                    } else {
+                        sound.playHop();
+                        bannerText = "🐰 HOPPY SHIELD ACTIVATED! BOING! 🐹";
+                        bannerTimer = 45;
+                        spawnParticles(item.x, item.y, 14);
+                    }
+                    fallingItems.splice(i, 1);
+                    continue;
+                }
+
+                if (item.y > canvas.height + 40) fallingItems.splice(i, 1);
+            }
+        }
+
+        function updateDodger(time) {
+            const interval = Math.max(340, 850 - (vibeState.speed * 48));
+            if (time - lastSpawn > interval) {
+                lastSpawn = time;
+                const goods = ['⭐', '🌾', '💎', '🥕'];
+                const hazards = ['☄️', '🛸', '🪐'];
+                const isHazard = Math.random() < 0.5;
+                spaceHazards.push({
+                    x: Math.random() * (canvas.width - 60) + 30,
+                    y: -25,
+                    vy: 2.8 + vibeState.speed * 0.48,
+                    emoji: isHazard ? hazards[Math.floor(Math.random() * hazards.length)] : goods[Math.floor(Math.random() * goods.length)],
+                    isHazard: isHazard
+                });
+            }
+
+            const shipY = canvas.height - 45;
+            for (let i = spaceHazards.length - 1; i >= 0; i--) {
+                const item = spaceHazards[i];
+                item.y += item.vy;
+
+                if (item.y >= shipY - 22 && item.y <= shipY + 22 && Math.abs(item.x - dodger.x) < 34) {
+                    if (!item.isHazard) {
+                        score += 15;
+                        sound.playCatch();
+                        spawnParticles(item.x, item.y, 10);
+                    } else {
+                        sound.playHop();
+                        bannerText = "🐹 PIP'S SQUEAK FORCEFIELD! 🚀";
+                        bannerTimer = 45;
+                        spawnParticles(item.x, item.y, 15);
+                    }
+                    spaceHazards.splice(i, 1);
+                    continue;
+                }
+
+                if (item.y > canvas.height + 40) spaceHazards.splice(i, 1);
+            }
+        }
+
+        function updatePong(time) {
+            pong.ballX += pong.vx;
+            pong.ballY += pong.vy;
+
+            // Walls
+            if (pong.ballX < 14) { pong.ballX = 14; pong.vx *= -1; sound.playHop(); }
+            if (pong.ballX > canvas.width - 14) { pong.ballX = canvas.width - 14; pong.vx *= -1; sound.playHop(); }
+
+            // AI Paddle (Pip at top)
+            const targetX = pong.ballX - pong.paddleW / 2;
+            pong.aiX += (targetX - pong.aiX) * 0.08;
+            pong.aiX = Math.max(10, Math.min(canvas.width - pong.paddleW - 10, pong.aiX));
+
+            // AI Collision
+            if (pong.ballY <= 38 && pong.ballX >= pong.aiX && pong.ballX <= pong.aiX + pong.paddleW) {
+                pong.vy = Math.abs(pong.vy);
+                sound.playHop();
+                spawnParticles(pong.ballX, pong.ballY, 6);
+            }
+
+            // Player Collision (Bottom)
+            const playerY = canvas.height - 48;
+            if (pong.ballY >= playerY && pong.ballY <= playerY + pong.paddleH + 6 &&
+                pong.ballX >= pong.playerX && pong.ballX <= pong.playerX + pong.paddleW) {
+                pong.vy = -Math.abs(pong.vy) * 1.02;
+                pong.vx += (Math.random() - 0.5) * 1.5;
+                score += 10;
+                sound.playCatch();
+                spawnParticles(pong.ballX, pong.ballY, 10);
+            }
+
+            // Bottom Reset (Shield bounce back!)
+            if (pong.ballY > canvas.height + 10) {
+                sound.playHop();
+                bannerText = "🐰 HOPPY BOUNCE SAVED THE CARROT! 🥕";
+                bannerTimer = 45;
+                pong.ballX = canvas.width / 2;
+                pong.ballY = canvas.height / 2;
+                pong.vy = -3.5;
+                pong.vx = (Math.random() > 0.5 ? 1 : -1) * 3;
+            }
+
+            // Top Reset
+            if (pong.ballY < -10) {
+                score += 25;
+                sound.playCatch();
+                bannerText = "🎉 GOAL! YOU SCORED ON PIP! 🏆";
+                bannerTimer = 45;
+                pong.ballX = canvas.width / 2;
+                pong.ballY = canvas.height / 2;
+                pong.vy = 3.5;
+            }
+        }
+
+        // Render Loop
+        function draw() {
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Background
+            ctx.fillStyle = (gameMode === 'dodger') ? '#04020f' : '#081711';
+            ctx.fillRect(0, 0, w, h);
+
+            if (gameMode === 'catcher' || gameMode === 'custom') {
+                // Meadow Grass
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
+                ctx.fillRect(0, h - 25, w, 25);
+
+                // Items
+                ctx.font = '28px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let it of fallingItems) {
+                    ctx.fillText(it.emoji, it.x, it.y);
+                }
+
+                // Barnaby Catcher
+                ctx.font = '40px sans-serif';
+                ctx.fillText('🐰🧺', catcher.x, h - 40);
+
+            } else if (gameMode === 'dodger') {
+                // Stars
+                ctx.font = '28px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let it of spaceHazards) {
+                    ctx.fillText(it.emoji, it.x, it.y);
+                }
+
+                // Pip Space Ship
+                ctx.font = '38px sans-serif';
+                ctx.fillText('🚀🐹', dodger.x, h - 45);
+
+            } else if (gameMode === 'pong') {
+                // Middle Line
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 8]);
+                ctx.beginPath();
+                ctx.moveTo(0, h / 2);
+                ctx.lineTo(w, h / 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // AI Paddle
+                ctx.fillStyle = '#ec4899';
+                ctx.beginPath();
+                ctx.roundRect(pong.aiX, 22, pong.paddleW, pong.paddleH, 7);
+                ctx.fill();
+                ctx.font = '20px sans-serif';
+                ctx.fillText('🐹', pong.aiX + pong.paddleW / 2, 14);
+
+                // Player Paddle
+                ctx.fillStyle = '#10b981';
+                ctx.beginPath();
+                ctx.roundRect(pong.playerX, h - 48, pong.paddleW, pong.paddleH, 7);
+                ctx.fill();
+                ctx.fillText('🐰', pong.playerX + pong.paddleW / 2, h - 20);
+
+                // Ball (Carrot)
+                ctx.font = '26px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(vibeState.food || '🥕', pong.ballX, pong.ballY);
+            }
+
+            // Particles
+            for (let p of particles) {
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Banner
+            if (bannerText && bannerTimer > 0) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(236, 72, 153, 0.9)';
+                ctx.shadowColor = '#ec4899';
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.roundRect(w / 2 - 150, 18, 300, 36, 18);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 14px Fredoka, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(bannerText, w / 2, 36);
+                ctx.restore();
+            }
+        }
+
+        function gameLoop(time) {
+            update(time);
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        requestAnimationFrame(gameLoop);
+
+    </script>
+</body>
+</html>
