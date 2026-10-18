@@ -1,14 +1,14 @@
 {
-  "prompt": "Settings Synced",
+  "prompt": "can the bunny basket fill up when it catches the items",
   "game": "catcher",
   "config": {
     "speed": 5,
-    "food": "\ud83e\udd55",
+    "food": "\ud83d\udc30",
     "theme": "neon",
     "ghostMode": true,
     "spellsApplied": [],
     "discoRainbow": false,
     "game": "catcher"
   },
-  "timestamp": "2026-10-18 11:33:55"
+  "timestamp": "2026-10-18 11:35:08"
 }
