@@ -1,0 +1,18 @@
+{
+  "adventure": "The Barrow of the Lantern King",
+  "rolled_at": "2026-10-14T22:06:24+01:00",
+  "stats": {
+    "SKILL": { "initial": 12, "current": 12 },
+    "STAMINA": { "initial": 23, "current": 23 },
+    "LUCK": { "initial": 8, "current": 8 }
+  },
+  "gold": 10,
+  "provisions": 4,
+  "inventory": [],
+  "flags": {},
+  "current_section": 1,
+  "visited_sections": [1],
+  "log": [
+    "Rolled SKILL 12 (6+6), STAMINA 23 (11+12), LUCK 8 (2+6)."
+  ]
+}

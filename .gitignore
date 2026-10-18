@@ -1,0 +1,21 @@
+# System & Temp
+.DS_Store
+.arcade.pid
+*.log
+bin/
+__pycache__/
+*.pyc
+.gemini/
+arcade_qr.png
+qr_code.png
+.wrangler/
+
+# Other local workspace projects
+AOS3 - Era 1/
+MythicBot/
+Train your Ears Game/
+Website/
+the145s-website/
+plugin designs/
+dnd-framework/
+project-master-template/

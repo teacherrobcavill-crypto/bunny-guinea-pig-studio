@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Neon Snake Arcade</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-theme="neon">
+  <div class="game-wrapper">
+    <!-- Header / Branding -->
+    <header class="game-header">
+      <div class="logo">
+        <span class="icon">🐍</span>
+        <h1>NEON <span class="accent">SNAKE</span></h1>
+      </div>
+      <div class="header-controls">
+        <button id="btn-leaderboard" class="pill-btn highlight-gold" title="View Top 10 Leaderboard">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-text">Top 10</span>
+        </button>
+        <button id="theme-btn" class="pill-btn icon-only" title="Toggle Theme">
+          <span class="btn-icon">🎨</span>
+        </button>
+        <button id="sound-btn" class="pill-btn icon-only" title="Toggle Sound">
+          <span id="sound-icon" class="btn-icon">🔊</span>
+        </button>
+        <a href="../index.html" class="pill-btn icon-only" title="Arcade Hub">
+          <span class="btn-icon">🏠</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Score & Stats Bar -->
+    <section class="stats-bar">
+      <div class="stat-card">
+        <span class="stat-label">SCORE</span>
+        <span id="score-display" class="stat-value">0</span>
+      </div>
+      <div class="stat-card highlight clickable" id="highscore-card" title="Click to view Top 10 Leaderboard">
+        <span class="stat-label">HIGH SCORE 🏆</span>
+        <span id="highscore-display" class="stat-value">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">LENGTH</span>
+        <span id="length-display" class="stat-value">3</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">SPEED</span>
+        <span id="speed-display" class="stat-value">1.0x</span>
+      </div>
+    </section>
+
+    <!-- Real-time Speed Control Slider (Single compact row) -->
+    <section class="speed-control-panel">
+      <div class="speed-row">
+        <div class="speed-title-wrap">
+          <span class="speed-icon">⚡</span>
+          <span class="speed-label">SPEED</span>
+        </div>
+        <button id="speed-minus-btn" class="speed-step-btn" title="Decrease Speed" aria-label="Decrease Speed">−</button>
+        <div class="slider-track-container">
+          <input
+            type="range"
+            id="speed-slider"
+            class="neon-range-slider"
+            min="1"
+            max="10"
+            value="5"
+            step="1"
+            aria-label="Game Speed Slider"
+          />
+        </div>
+        <button id="speed-plus-btn" class="speed-step-btn" title="Increase Speed" aria-label="Increase Speed">+</button>
+        <span id="speed-slider-badge" class="speed-badge">1.0x</span>
+      </div>
+    </section>
+
+    <!-- Canvas Frame Container -->
+    <div class="canvas-wrapper">
+      <div class="canvas-container" id="canvas-container">
+        <canvas id="game-canvas" width="600" height="600"></canvas>
+
+        <!-- Golden Food Countdown Timer Bar -->
+        <div id="bonus-timer-bar" class="bonus-timer-bar hidden">
+          <div id="bonus-timer-progress" class="bonus-timer-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- On-screen Controls (Touch / Click) -->
+    <section class="touch-controls" id="touch-controls">
+      <div class="dpad-grid">
+        <button class="dpad-btn up" id="btn-up" aria-label="Up">▲</button>
+        <button class="dpad-btn left" id="btn-left" aria-label="Left">◀</button>
+        <button class="dpad-btn center" id="btn-pause" aria-label="Pause">⏸</button>
+        <button class="dpad-btn right" id="btn-right" aria-label="Right">▶</button>
+        <button class="dpad-btn down" id="btn-down" aria-label="Down">▼</button>
+      </div>
+    </section>
+
+    <!-- Controls Legend -->
+    <footer class="game-footer">
+      <div class="control-tags">
+        <span class="tag"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> Move</span>
+        <span class="tag"><kbd>Space</kbd> Pause</span>
+        <span class="tag"><kbd>−</kbd>/<kbd>+</kbd> Speed</span>
+        <span class="tag"><kbd>R</kbd> Restart</span>
+        <span class="tag"><kbd>M</kbd> Mute Audio</span>
+      </div>
+      <p class="credits">Crafted with HTML5 Canvas, Web Audio & Vanilla JavaScript</p>
+    </footer>
+  </div>
+
+  <!-- Fullscreen Modal Overlays (Positioned fixed over viewport) -->
+
+  <!-- Start Overlay -->
+  <div id="start-overlay" class="overlay active">
+    <div class="overlay-card">
+      <div class="snake-badge">⚡ READY ⚡</div>
+      <h2>NEON ARCADE</h2>
+      <p class="subtitle">Eat apples, collect golden stars, and don't bite yourself!</p>
+
+      <div class="options-group">
+        <label class="option-title">DIFFICULTY PRESETS</label>
+        <div class="segmented-control" id="difficulty-selector">
+          <button class="seg-btn" data-level="2">Chill</button>
+          <button class="seg-btn active" data-level="5">Classic</button>
+          <button class="seg-btn" data-level="8">Turbo</button>
+          <button class="seg-btn" data-level="10">Insane</button>
+        </div>
+      </div>
+
+      <div class="options-group">
+        <label class="option-title">WALL RULES</label>
+        <div class="segmented-control" id="wall-selector">
+          <button class="seg-btn active" data-walls="solid">Solid (Death)</button>
+          <button class="seg-btn" data-walls="portal">Portal (Pass-thru)</button>
+        </div>
+      </div>
+
+      <button id="start-btn" class="glow-button">PLAY GAME <span class="key-hint">[SPACE]</span></button>
+    </div>
+  </div>
+
+  <!-- Pause Overlay -->
+  <div id="pause-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2>GAME PAUSED</h2>
+      <p class="subtitle">Take a breath. The snake is waiting.</p>
+      <div class="action-buttons">
+        <button id="resume-btn" class="glow-button">RESUME <span class="key-hint">[SPACE]</span></button>
+        <button id="restart-from-pause-btn" class="secondary-button">RESTART</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Overlay -->
+  <div id="gameover-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <div class="gameover-badge" id="death-reason">CRASHED!</div>
+      <h2 class="gameover-title">GAME OVER</h2>
+
+      <div class="results-grid">
+        <div class="result-box">
+          <span class="label">FINAL SCORE</span>
+          <span id="final-score" class="num">0</span>
+        </div>
+        <div class="result-box">
+          <span class="label">BEST SCORE</span>
+          <span id="final-best" class="num">0</span>
+        </div>
+        <div class="result-box">
+          <span class="label">APPLES EATEN</span>
+          <span id="final-apples" class="num">0</span>
+        </div>
+        <div class="result-box">
+          <span class="label">TIME SURVIVED</span>
+          <span id="final-time" class="num">00:00</span>
+        </div>
+      </div>
+
+      <div id="new-record-banner" class="new-record-banner hidden">
+        🏆 NEW HIGH SCORE! 🏆
+      </div>
+
+      <!-- Name Entry if Qualified for Top 10 -->
+      <div id="top10-entry-box" class="top10-entry-box hidden">
+        <div class="top10-tag">🏆 TOP 10 RECORD! 🏆</div>
+        <p class="top10-hint">Enter your name for the arcade leaderboard:</p>
+        <div class="top10-input-row">
+          <input type="text" id="leaderboard-name-input" maxlength="10" placeholder="YOUR NAME" autocomplete="off" />
+          <button id="save-leaderboard-btn" class="save-record-btn">SAVE</button>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="restart-btn" class="glow-button">PLAY AGAIN <span class="key-hint">[SPACE]</span></button>
+        <button id="view-leaderboard-from-gameover" class="secondary-button">🏆 VIEW TOP 10</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top 10 Leaderboard Modal Overlay -->
+  <div id="leaderboard-overlay" class="overlay hidden">
+    <div class="overlay-card leaderboard-card">
+      <div class="leaderboard-header">
+        <div class="title-with-badge">
+          <span class="trophy-badge">🏆</span>
+          <h2>TOP 10 LEADERBOARD</h2>
+        </div>
+        <button id="close-leaderboard-x" class="close-x-btn" aria-label="Close Leaderboard">✕</button>
+      </div>
+      <p class="subtitle">Arcade Legends • Hall of Fame</p>
+
+      <div class="leaderboard-table-wrap">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th style="width:16%">RANK</th>
+              <th style="width:44%; text-align:left;">PILOT</th>
+              <th style="width:24%; text-align:right;">SCORE</th>
+              <th style="width:16%; text-align:right;">LEN</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-tbody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-buttons">
+        <button id="close-leaderboard-btn" class="glow-button">BACK TO GAME</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../vibe_patch.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

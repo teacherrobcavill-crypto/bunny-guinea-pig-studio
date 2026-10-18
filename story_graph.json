@@ -1,0 +1,207 @@
+{
+  "title": "The Barrow of the Lantern King",
+  "series": "Fighting Fantasy: The Lost Volumes, Book 1",
+  "start": 1,
+  "critical_items": ["Silver Sickle"],
+  "nodes": {
+    "1": {
+      "id": "START",
+      "title": "The Watchtower Trapdoor",
+      "type": "start",
+      "choices": [
+        { "text": "Take the west archway towards the smell of old iron", "to": 29 },
+        { "text": "Descend the crumbling east stair towards the sound of water", "to": 90 }
+      ]
+    },
+    "29": {
+      "id": "GUARDROOM",
+      "title": "The Guardroom",
+      "type": "combat",
+      "combat": [{ "name": "SKELETON GUARD", "skill": 7, "stamina": 6 }],
+      "escape": { "allowed": true, "stamina_cost": 2, "to": 47 },
+      "choices": [
+        { "text": "If you win", "to": 54, "condition": "win_combat" },
+        { "text": "Escape through the far door (lose 2 STAMINA)", "to": 47, "condition": "escape" }
+      ]
+    },
+    "90": {
+      "id": "STAIR_TRAP",
+      "title": "The Crumbling Stair",
+      "type": "luck",
+      "test": "luck",
+      "choices": [
+        { "text": "If you are Lucky", "to": 59, "condition": "lucky" },
+        { "text": "If you are Unlucky", "to": 63, "condition": "unlucky" }
+      ]
+    },
+    "63": {
+      "id": "PIT",
+      "title": "The Bone Pit",
+      "type": "normal",
+      "effects": { "STAMINA": -4 },
+      "items_gained": ["Bone Charm"],
+      "choices": [
+        { "text": "Climb the roots out of the pit", "to": 59 }
+      ]
+    },
+    "54": {
+      "id": "ARMOURY",
+      "title": "The Rotted Armoury",
+      "type": "normal",
+      "choices": [
+        { "text": "Examine the patch of wall where cold air whistles through the mortar", "to": 71 },
+        { "text": "Leave by the iron-bound door", "to": 47 }
+      ]
+    },
+    "71": {
+      "id": "ALCOVE",
+      "title": "The Hidden Alcove",
+      "type": "item",
+      "hidden": true,
+      "items_gained": ["Silver Sickle"],
+      "choices": [
+        { "text": "Return through the armoury and out of the iron-bound door", "to": 47 }
+      ]
+    },
+    "59": {
+      "id": "GROTTO",
+      "title": "The Glimmering Grotto",
+      "type": "normal",
+      "choices": [
+        { "text": "Eat one of the glowing blue mushrooms", "to": 22 },
+        { "text": "Push on through the grotto towards the roar of water", "to": 14 }
+      ]
+    },
+    "22": {
+      "id": "MUSHROOM",
+      "title": "The Vision",
+      "type": "normal",
+      "effects": { "STAMINA": 3 },
+      "flags_set": ["vision_of_sickle"],
+      "choices": [
+        { "text": "Stagger onward towards the water", "to": 14 }
+      ]
+    },
+    "47": {
+      "id": "CORRIDOR",
+      "title": "The Corridor of Faces",
+      "type": "normal",
+      "choices": [
+        { "text": "Climb the narrow stair to the north", "to": 3 },
+        { "text": "Follow the damp tunnel east", "to": 14 },
+        { "text": "Go back west into the armoury", "to": 54 }
+      ]
+    },
+    "14": {
+      "id": "RIVER",
+      "title": "The Black River",
+      "type": "normal",
+      "choices": [
+        { "text": "Hail the hooded figure in the boat", "to": 55 },
+        { "text": "Wade across the ford", "to": 53 },
+        { "text": "Follow the bank west into a dry tunnel", "to": 47 }
+      ]
+    },
+    "53": {
+      "id": "RIVER_GHOUL",
+      "title": "The Ford",
+      "type": "combat",
+      "combat": [{ "name": "RIVER GHOUL", "skill": 8, "stamina": 7 }],
+      "special_rules": "If the Ghoul wins two Attack Rounds in a row, you are dragged under: lose 1 extra STAMINA.",
+      "choices": [
+        { "text": "If you win", "to": 51, "condition": "win_combat" }
+      ]
+    },
+    "55": {
+      "id": "FERRYMAN",
+      "title": "The Ferryman",
+      "type": "normal",
+      "choices": [
+        { "text": "Pay 3 Gold Pieces", "to": 51, "requires": { "gold": 3 }, "effects": { "gold": -3 } },
+        { "text": "Refuse and step back onto the bank", "to": 14 }
+      ]
+    },
+    "3": {
+      "id": "CHAPEL",
+      "title": "The Drowned Chapel",
+      "type": "normal",
+      "optional_effects": [
+        { "text": "Place 1 Gold Piece on the altar", "cost": { "gold": 1 }, "effects": { "LUCK": 1 }, "once": true }
+      ],
+      "choices": [
+        { "text": "Descend the spiral stair behind the altar", "to": 93 },
+        { "text": "Return to the corridor", "to": 47 }
+      ]
+    },
+    "51": {
+      "id": "FAR_BANK",
+      "title": "The Far Bank",
+      "type": "normal",
+      "choices": [
+        { "text": "Search the drowned body tangled in the reeds", "to": 85 },
+        { "text": "Climb the steps to the great bronze doors", "to": 93 }
+      ]
+    },
+    "85": {
+      "id": "CORPSE",
+      "title": "The Drowned Adventurer",
+      "type": "item",
+      "effects": { "gold": 3, "provisions": 1 },
+      "items_gained": ["Waterlogged Journal"],
+      "choices": [
+        { "text": "Climb the steps to the great bronze doors", "to": 93 }
+      ]
+    },
+    "93": {
+      "id": "ANTECHAMBER",
+      "title": "The Antechamber of Lanterns",
+      "type": "normal",
+      "choices": [
+        { "text": "Push open the bronze doors", "to": 2 },
+        { "text": "Turn back up the spiral stair", "to": 3 }
+      ]
+    },
+    "2": {
+      "id": "THRONE",
+      "title": "The Lantern King",
+      "type": "gate",
+      "choices": [
+        { "text": "If you have the Silver Sickle", "to": 96, "requires": { "item": "Silver Sickle" } },
+        { "text": "If you do not", "to": 35, "requires": { "not_item": "Silver Sickle" } }
+      ]
+    },
+    "96": {
+      "id": "BOSS_FIGHT",
+      "title": "Silver Against Shadow",
+      "type": "combat",
+      "combat": [{ "name": "MORGRATH THE LANTERN KING", "skill": 11, "stamina": 14 }],
+      "modifiers": [
+        { "if_item": "Bone Charm", "effect": "Reduce Morgrath's SKILL by 2 for the whole fight." }
+      ],
+      "special_rules": "Lantern Flare: at the start of every third Attack Round, Test Your Luck. If Unlucky, lose 2 STAMINA from the green fire. Alternatively, you may instead attack the Lantern (SKILL 9 STAMINA 4); destroying it reduces Morgrath's STAMINA to half (rounded down).",
+      "choices": [
+        { "text": "If you win", "to": 95, "condition": "win_combat" }
+      ]
+    },
+    "35": {
+      "id": "DOOM",
+      "title": "Steel Through Smoke",
+      "type": "death",
+      "choices": []
+    },
+    "95": {
+      "id": "VICTORY",
+      "title": "Dawn Over the Barrow",
+      "type": "victory",
+      "choices": []
+    }
+  },
+  "validation": {
+    "node_count": 20,
+    "combat_nodes": [29, 53, 96],
+    "luck_tests": [90],
+    "hidden_item": { "item": "Silver Sickle", "node": 71, "required_at": 2 },
+    "endings": { "death": [35], "victory": [95] },
+    "global_death_rule": "Any section: if STAMINA reaches 0, your adventure ends here."
+  }
+}

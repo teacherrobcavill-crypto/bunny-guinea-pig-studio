@@ -1,0 +1,18 @@
+{
+  "name": "blockblast",
+  "version": "1.0.0",
+  "description": "An authentic arcade recreation of the mobile puzzle game Block Blast.",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
+  },
+  "keywords": [
+    "block-blast",
+    "arcade",
+    "puzzle",
+    "web-audio",
+    "canvas"
+  ],
+  "author": "teacherrobcavill-crypto",
+  "license": "MIT"
+}

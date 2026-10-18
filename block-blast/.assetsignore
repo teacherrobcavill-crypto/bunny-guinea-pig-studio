@@ -1,0 +1,15 @@
+.git
+.git/**
+node_modules
+node_modules/**
+.wrangler
+.wrangler/**
+.DS_Store
+package.json
+package-lock.json
+bun.lock
+bun.lockb
+wrangler.jsonc
+.assetsignore
+*.log
+README.md

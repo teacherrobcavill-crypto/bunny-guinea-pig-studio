@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Fighting Fantasy: The Vault of the Iron Warlock (Book I)</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- TOP NAVIGATION & STATUS BAR -->
+    <header class="top-nav-bar">
+        <div class="brand-badge">
+            <span class="dragon-logo">🐉</span>
+            <div class="brand-text-block">
+                <span class="brand-title">FIGHTING FANTASY™</span>
+                <span class="brand-subtitle">The Vault of the Iron Warlock</span>
+            </div>
+        </div>
+        <div class="nav-controls">
+            <a href="../index.html" class="btn-nav-control nav-btn-arcade" style="text-decoration:none;" title="Return to Arcade Hub">🏠 Arcade</a>
+            <button class="btn-nav-control" onclick="window.Engine.retraceSteps()" title="Retrace steps back to previous chamber">↩ Back</button>
+            
+            <div class="voice-nav-group">
+                <button class="btn-nav-control" id="btn-voice-toggle" title="Toggle Theatrical Narrator">🎙️ Voice: OFF</button>
+                <button class="btn-nav-control btn-voice-gear" id="btn-voice-gear" onclick="window.Narrator.openSettingsModal()" title="Voice & Narrator Settings (Ian McKellen Style)">⚙️</button>
+            </div>
+            
+            <button class="btn-nav-control" id="btn-ambient-toggle" title="Toggle eerie cavern ambience">🎵 Ambience: OFF</button>
+            <button class="btn-nav-control" id="btn-sound-toggle" title="Toggle sound effects">🔊 Sound: ON</button>
+            <button class="btn-nav-control btn-nav-map-glow" id="btn-nav-map" onclick="window.Engine.toggleMap(true)" title="Open Realm World Map & Dungeon Exploration Chart">🗺️ World Map</button>
+            <button class="btn-nav-control" onclick="window.Engine.goToSection('intro')" title="Restart Quest">🔄 Title</button>
+        </div>
+    </header>
+
+    <!-- MOBILE QUICK STATUS HUD (iPhone Optimized) -->
+    <div class="mobile-quick-hud">
+        <span class="mob-pill mob-pill-hp" title="STAMINA">❤️ <strong id="mob-hud-stamina">20/20</strong></span>
+        <span class="mob-pill mob-pill-skill" title="SKILL">⚔️ <strong id="mob-hud-skill">10</strong></span>
+        <span class="mob-pill mob-pill-luck" title="LUCK">🍀 <strong id="mob-hud-luck">10</strong></span>
+        <span class="mob-pill mob-pill-res" title="Class Resource">⚡ <strong id="mob-hud-resource">Rage 0</strong></span>
+    </div>
+
+    <!-- MAIN VIEWPORT -->
+    <main class="game-viewport">
+
+        <!-- LEFT PANEL: INTERACTIVE ADVENTURE SHEET HUD -->
+        <aside class="adventure-sheet-panel">
+            <div class="sheet-header">
+                <span class="sheet-title">ADVENTURE SHEET</span>
+                <span class="class-badge" id="hud-class-badge">⚔️ The Juggernaut</span>
+            </div>
+
+            <div class="sheet-scroll-body">
+                
+                <!-- Core Attribute Triad -->
+                <div class="attributes-card">
+                    <div class="stat-triad-row">
+                        <div class="stat-box stat-skill" title="Martial ability and combat strength">
+                            <div class="stat-label">SKILL</div>
+                            <div class="stat-value" id="hud-skill-val">10 / 10</div>
+                        </div>
+                        <div class="stat-box stat-stamina" title="Physical endurance and life points">
+                            <div class="stat-label">STAMINA</div>
+                            <div class="stat-value" id="hud-stamina-val">20 / 20</div>
+                        </div>
+                        <div class="stat-box stat-luck" title="Divine fortune - decrements by 1 when tested!">
+                            <div class="stat-label">LUCK</div>
+                            <div class="stat-value" id="hud-luck-val">10 / 10</div>
+                        </div>
+                    </div>
+
+                    <!-- Stamina Health Meter -->
+                    <div class="meter-row">
+                        <div class="meter-header">
+                            <span>STAMINA VITALITY</span>
+                            <button class="btn-action-small" id="btn-test-luck-hud" title="Test your luck out of combat">Test Luck</button>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill stamina-fill" id="hud-stamina-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- WoW Class Resource Meter -->
+                    <div class="resource-hud-box" id="hud-class-resource-box">
+                        <span>Rage: <strong>0/100</strong></span>
+                    </div>
+                </div>
+
+                <!-- Provisions, Potions & Gold -->
+                <div class="consumables-box">
+                    <div class="section-subtitle-hud">SUPPLIES & PROVISIONS</div>
+                    
+                    <div class="consumable-item">
+                        <span>🍞 Provisions: <strong id="hud-provisions-val">10 meals</strong></span>
+                        <button class="btn-action-small" id="btn-eat-provision" title="Eat meal outside combat to restore 4 STAMINA">Eat Meal (+4 HP)</button>
+                    </div>
+
+                    <div class="consumable-item">
+                        <span>🧪 Potion: <span id="hud-potion-desc">Potion of Strength (2 draughts)</span></span>
+                        <button class="btn-action-small" id="btn-drink-potion" title="Drink a draught of your chosen potion">Drink Draught</button>
+                    </div>
+
+                    <div class="consumable-item">
+                        <span>💰 Gold Pouch: <strong id="hud-gold-val">15 GP</strong></span>
+                    </div>
+                </div>
+
+                <!-- Keys & Quest Artifacts -->
+                <div class="inventory-box">
+                    <div class="section-subtitle-hud">DUNGEON KEYS</div>
+                    <div class="hud-items-wrap" id="hud-keys-items">
+                        <span class="hud-key-pill" style="opacity: 0.5;">No keys found yet</span>
+                    </div>
+                </div>
+
+                <!-- Inventory & Equipment -->
+                <div class="inventory-box">
+                    <div class="section-subtitle-hud">BACKPACK INVENTORY</div>
+                    <div class="hud-items-wrap" id="hud-inventory-items">
+                        <!-- Populated by engine -->
+                    </div>
+                </div>
+
+                <!-- "Keep Your Finger in the Page" Bookmarks -->
+                <div class="bookmarks-hud-box">
+                    <div class="section-subtitle-hud">KEEP YOUR FINGER IN THE PAGE</div>
+                    <p style="font-size: 11px; color: #a8947b; margin-bottom: 8px;">Save up to 3 bookmark slots to turn back if you suffer a fatal mistake!</p>
+                    <div id="hud-bookmarks-list">
+                        <!-- Populated by engine -->
+                    </div>
+                </div>
+
+                <!-- Direct Section Jump (Steve Jackson Feature) -->
+                <div class="section-jump-card">
+                    <div class="section-subtitle-hud">TURN TO SECTION #</div>
+                    <form class="jump-form" id="section-jump-form">
+                        <input type="number" class="jump-input" id="section-jump-input" placeholder="e.g. 14, 42, 100" min="1" max="400">
+                        <button type="submit" class="btn-jump">Turn Page</button>
+                    </form>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- CENTER PANEL: THE BOOK OF TITAN -->
+        <section class="book-tome-panel">
+            <div class="parchment-page" id="book-page-content">
+                <!-- Dynamically rendered book section -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- WORLD OF WARCRAFT COMBAT ARENA OVERLAY -->
+    <div id="combat-arena-wrapper"></div>
+
+    <!-- 3D INTERACTIVE DICE ROLLER MODAL -->
+    <div class="dice-roller-modal" id="dice-roller-modal"></div>
+
+    <!-- DUNGEON AUTOMAP & CODEX MODAL -->
+    <div class="dungeon-map-modal" id="dungeon-map-modal"></div>
+
+    <!-- THEATRICAL NARRATOR VOICE SETTINGS MODAL -->
+    <div class="voice-settings-modal" id="voice-settings-modal"></div>
+
+    <!-- MOBILE BOTTOM NAVIGATION (iPhone Thumb-Friendly) -->
+    <nav class="mobile-bottom-tabs">
+        <button class="mobile-tab-btn active" data-view="book" onclick="window.Engine.switchMobileView('book')">
+            <span class="tab-icon">📖</span>
+            <span class="tab-label">Tome</span>
+        </button>
+        <button class="mobile-tab-btn" data-view="sheet" onclick="window.Engine.switchMobileView('sheet')">
+            <span class="tab-icon">📜</span>
+            <span class="tab-label">Sheet</span>
+        </button>
+        <button class="mobile-tab-btn" onclick="window.Engine.toggleMap(true)">
+            <span class="tab-icon">🗺️</span>
+            <span class="tab-label">World Map</span>
+        </button>
+        <button class="mobile-tab-btn" onclick="window.Narrator.togglePlayCurrentSection()">
+            <span class="tab-icon">🎙️</span>
+            <span class="tab-label">Narrate</span>
+        </button>
+    </nav>
+
+    <!-- Game Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/dice.js"></script>
+    <script src="js/character.js"></script>
+    <script src="js/combat.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/sections.js"></script>
+    <script src="js/narrator.js"></script>
+    <script src="js/engine.js"></script>
+    <script>
+        // Start engine on window load
+        window.addEventListener('DOMContentLoaded', () => {
+            window.Engine.init();
+        });
+    </script>
+</body>
+</html>
