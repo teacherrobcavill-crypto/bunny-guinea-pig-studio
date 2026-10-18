@@ -1,9 +1,9 @@
 {
-  "prompt": "Surprise mix with \ud83e\udd66 treats, cyberpunk colors, and level 8 speed!",
+  "prompt": "Cute guinea pig and bunny face blocks with bouncy animations!",
   "game": "blocks",
   "config": {
     "speed": 8,
-    "food": "\ud83e\udd66",
+    "food": "\ud83d\udc30",
     "theme": "cyberpunk",
     "ghostMode": true,
     "spellsApplied": [],
@@ -11,5 +11,5 @@
     "game": "blocks",
     "customColors": null
   },
-  "timestamp": "2026-10-18 11:36:55"
+  "timestamp": "2026-10-18 11:37:09"
 }
