@@ -1,14 +1,14 @@
 {
   "prompt": "Settings Synced",
-  "game": "dodger",
+  "game": "blocks",
   "config": {
     "speed": 5,
-    "food": "\u2b50",
+    "food": "\ud83e\udd55",
     "theme": "cyberpunk",
     "ghostMode": true,
     "spellsApplied": [],
     "discoRainbow": false,
-    "game": "dodger"
+    "game": "blocks"
   },
-  "timestamp": "2026-10-18 11:36:25"
+  "timestamp": "2026-10-18 11:36:44"
 }

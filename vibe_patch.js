@@ -1,18 +1,18 @@
 // ========================================================
 // 🐰 BARNABY BUNNY & PIP GUINEA PIG LIVE AI CODE PATCH
-// Generated: 2026-10-18 11:36:25
+// Generated: 2026-10-18 11:36:44
 // Prompt: "Settings Synced"
-// Game: dodger
+// Game: blocks
 // ========================================================
 
 window.VIBE_CONFIG = {
   "speed": 5,
-  "food": "\u2b50",
+  "food": "\ud83e\udd55",
   "theme": "cyberpunk",
   "ghostMode": true,
   "spellsApplied": [],
   "discoRainbow": false,
-  "game": "dodger"
+  "game": "blocks"
 };
 
 // Live Game Runtime Hooks
@@ -29,7 +29,7 @@ window.VIBE_CONFIG = {
 
   // 2. Broadcast to any open play.html or standalone tab
   try {
-    localStorage.setItem('vibe_state_dodger', JSON.stringify(cfg));
+    localStorage.setItem('vibe_state_blocks', JSON.stringify(cfg));
     localStorage.setItem('vibe_last_prompt', "Settings Synced");
     window.dispatchEvent(new CustomEvent('vibeUpdate', { detail: cfg }));
   } catch (e) {}
