@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+target_volume="${3:-/}"
+target_volume="${target_volume%/}"
+
+aax_relative_path="/Library/Application Support/Avid/Audio/Plug-Ins/AL-1.aaxplugin"
+global_aax_path="${target_volume}${aax_relative_path}"
+
+echo "AL-1 AAX preinstall: removing existing bundle at ${global_aax_path}"
+rm -rf "${global_aax_path}"
+
+# Cleanup legacy per-user AAX installs so the system copy is used after upgrade.
+users_root="${target_volume}/Users"
+if [ -d "${users_root}" ]; then
+  find "${users_root}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | while IFS= read -r user_home; do
+    legacy_aax_path="${user_home}/Library/Application Support/Avid/Audio/Plug-Ins/AL-1.aaxplugin"
+    if [ -e "${legacy_aax_path}" ]; then
+      echo "AL-1 AAX preinstall: removing legacy bundle at ${legacy_aax_path}"
+      rm -rf "${legacy_aax_path}"
+    fi
+  done
+fi
+
+exit 0

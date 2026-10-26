@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="audio.naturl.al1.vst3" postinstall-action="none" version="1.0.0.4000" format-version="2" generator-version="InstallCmds-864 (25D125)" auth="root">
+    <payload numberOfFiles="29" installKBytes="37618"/>
+    <bundle path="./Library/Audio/Plug-Ins/VST3/AL-1.vst3" id="audio.naturl.al1" CFBundleShortVersionString="1.0.0" CFBundleVersion="1.0.0"/>
+    <bundle-version>
+        <bundle id="audio.naturl.al1"/>
+    </bundle-version>
+    <upgrade-bundle>
+        <bundle id="audio.naturl.al1"/>
+    </upgrade-bundle>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+    <scripts>
+        <preinstall file="./preinstall" timeout="600"/>
+    </scripts>
+</pkg-info>

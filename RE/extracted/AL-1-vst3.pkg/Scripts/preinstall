@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+target_volume="${3:-/}"
+target_volume="${target_volume%/}"
+
+vst3_relative_path="/Library/Audio/Plug-Ins/VST3/AL-1.vst3"
+global_vst3_path="${target_volume}${vst3_relative_path}"
+
+echo "AL-1 VST3 preinstall: removing existing bundle at ${global_vst3_path}"
+rm -rf "${global_vst3_path}"
+
+# Cleanup legacy per-user VST3 installs so the system copy is used after upgrade.
+users_root="${target_volume}/Users"
+if [ -d "${users_root}" ]; then
+  find "${users_root}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | while IFS= read -r user_home; do
+    legacy_vst3_path="${user_home}/Library/Audio/Plug-Ins/VST3/AL-1.vst3"
+    if [ -e "${legacy_vst3_path}" ]; then
+      echo "AL-1 VST3 preinstall: removing legacy bundle at ${legacy_vst3_path}"
+      rm -rf "${legacy_vst3_path}"
+    fi
+  done
+fi
+
+exit 0

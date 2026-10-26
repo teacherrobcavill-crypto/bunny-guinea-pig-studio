@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<installer-gui-script minSpecVersion="1">
+    <title>Naturl Audio AL-1</title>
+    <license file="license.txt"/>
+    <options customize="always" require-scripts="false"/>
+    <domains enable_anywhere="true" enable_currentUserHome="false" enable_localSystem="true"/>
+    <choices-outline>
+        <line choice="choice_aax"/>
+        <line choice="choice_au"/>
+        <line choice="choice_vst3"/>
+    </choices-outline>
+    <choice id="choice_aax" title="AAX Plugin" description="Install the AAX plugin for Pro Tools.">
+        <pkg-ref id="audio.naturl.al1.aax"/>
+    </choice>
+    <choice id="choice_au" title="AU Plugin" description="Install the AU plugin for Logic, GarageBand, etc.">
+        <pkg-ref id="audio.naturl.al1.au"/>
+    </choice>
+    <choice id="choice_vst3" title="VST3 Plugin" description="Install the VST3 plugin for Cubase, Reaper, etc.">
+        <pkg-ref id="audio.naturl.al1.vst3"/>
+    </choice>
+    <pkg-ref id="audio.naturl.al1.aax" version="1.0.0.4000" auth="Root" installKBytes="37242" updateKBytes="0">#AL-1-aax.pkg</pkg-ref>
+    <pkg-ref id="audio.naturl.al1.au" version="1.0.0.4000" auth="Root" installKBytes="37059" updateKBytes="0">#AL-1-au.pkg</pkg-ref>
+    <pkg-ref id="audio.naturl.al1.vst3" version="1.0.0.4000" auth="Root" installKBytes="37618" updateKBytes="0">#AL-1-vst3.pkg</pkg-ref>
+    <pkg-ref id="audio.naturl.al1.aax">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="5.10.4 GM (b5324, 72ed0501)" CFBundleVersion="5.10.4.5324" id="com.paceap.eden.dsig.bundle" path="Library/Application Support/Avid/Audio/Plug-Ins/AL-1.aaxplugin/Contents/__Pace_Eden.bundle"/>
+            <bundle CFBundleShortVersionString="1.0.0" CFBundleVersion="1.0.0" id="audio.naturl.al1" path="Library/Application Support/Avid/Audio/Plug-Ins/AL-1.aaxplugin"/>
+        </bundle-version>
+    </pkg-ref>
+    <pkg-ref id="audio.naturl.al1.au">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="1.0.0" CFBundleVersion="1.0.0" id="audio.naturl.al1" path="Library/Audio/Plug-Ins/Components/AL-1.component"/>
+        </bundle-version>
+    </pkg-ref>
+    <pkg-ref id="audio.naturl.al1.vst3">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="1.0.0" CFBundleVersion="1.0.0" id="audio.naturl.al1" path="Library/Audio/Plug-Ins/VST3/AL-1.vst3"/>
+        </bundle-version>
+    </pkg-ref>
+</installer-gui-script>

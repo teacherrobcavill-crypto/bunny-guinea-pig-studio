@@ -1,0 +1,98 @@
+Naturl Audio, Inc. - END USER LICENSE AGREEMENT
+November 2025
+IMPORTANT-READ CAREFULLY. By clicking "I Agree," installing, or using the Software, you agree to be bound by this End User License Agreement ("EULA"). If you do not agree, do not install or use the Software.
+1. Definitions
+
+"Company," "Naturl Audio," "we," "us," "our" means Naturl Audio, Inc., a Delaware corporation (HQ: Austin, Texas).
+"Software" means Naturl Audio's audio software, plug-ins, applications, SDKs, presets, and related documentation provided with or for a product, including Updates (bug fixes, patches, minor feature releases) and excluding Upgrades (new major versions).
+"Authorized User" means the natural person (or, for seat/site licenses, personnel) authorized to use the Software under this EULA.
+"Device" means a single physical or virtual machine.
+"License Key" means any activation mechanism (key, account, token).
+"Rent-to-own (RTO)" means recurring payments that confer a time-limited license which converts to a perpetual license upon receipt of the final payment.
+2. License Grants
+
+2.1 Per-User (Named) License. Subject to payment and compliance, Naturl Audio grants one named natural person a non-exclusive, non-transferable (except SS15), non-sublicensable license to install and use the Software on up to two (2) Devices the person controls. Not a floating/concurrent license; no use by multiple people.
+
+2.2 Site/Seat License (Business). If your order specifies seats, your organization may allow that many Authorized Users to use the Software, provided concurrent use does not exceed the seat count and you apply reasonable technical/administrative controls.
+
+2.3 Automated/Server-Side Use. Server-side or headless use is allowed only as black-box processing. You may not expose internal plug-in parameters or controls to downstream users or permit third-party control of the Software.
+
+2.4 Evaluation (Trial). Evaluation builds may be used for 30 days solely for evaluation; they may auto-disable at the end of the trial.
+
+2.5 NFR / Educational / Beta. "Not for Resale," academic, or beta licenses are personal, time-limited (if stated), not transferable, and may have feature/usage limits.
+
+2.6 Rent-to-own. RTO provides access while payments are current; upon the final payment, your license converts to perpetual for the then-current major version. If payments lapse, access may stop; interim payments are non-refundable except where required by law.
+3. Ownership; Reservation of Rights
+
+The Software is licensed, not sold. Naturl Audio and its licensors retain all rights not expressly granted.
+4. Restrictions
+
+You shall not: (a) lend, rent, lease, sell, sublicense, publish, or distribute the Software or License Keys; (b) permit use by anyone other than Authorized Users; (c) circumvent, disable, or tamper with copy protection or License Keys; (d) reverse engineer, decompile, or disassemble the Software except to the limited extent permitted by applicable law for interoperability after giving Naturl Audio a reasonable opportunity to assist; (e) use the Software to create a competing product or replicate its "look and feel"; (f) use the Software or its outputs to train, fine-tune, or evaluate any AI/ML system; (g) use the Software in safety-of-life systems.
+5. Activation; License Compliance; Privacy
+
+5.1 Activation & Validation. The Software/installer may require online activation and may periodically contact Naturl Audio servers to validate license status, manage device activations, and detect misuse. These checks may transmit limited information (license/account identifiers, device/OS identifiers, IP-derived region, and version/build metadata). Validation is mandatory and not used for marketing.
+
+5.2 Analytics (Optional). De-identified usage analytics are opt-in and separate from license validation.
+
+5.3 Privacy Policy. Personal data (if any) is handled under Naturl Audio's Privacy Policy at https://naturl.audio/privacy-policy
+6. Updates; Upgrades; End-of-Life
+
+Naturl Audio may provide Updates at its discretion; Upgrades may require a new license/fee. Older versions/platforms may become unsupported after reasonable notice.
+7. Third-Party Components; Formats
+
+The Software may display or provide links to third-party websites or services, including through third-party advertising ("Third Party Materials"). Licensee agrees and acknowledges that Naturl Audio is not responsible for Third Party Materials.
+
+In the event the Software utilizes or includes any third-party content, software, or other copyrighted material ("Third Party Content"), the terms and conditions, where applicable, and conditions of use of such Third Party Content shall be provided along with the Software. Your use of such Third Party Content is governed by the respective terms and conditions, if any. By agreeing to this EULA, you are simultaneously agreeing to comply with the terms and conditions of any Third Party Content.
+
+If you acquired this Software in Europe, all set forth in this Section is subject to Section 12.2.1 of this EULA.
+8. Fees; Taxes; Refunds
+
+Fees are due as specified in your order; you are responsible for applicable taxes (excluding Naturl Audio's income taxes). Due to the nature of Naturl Audio's products being non-tangible, digitally delivered goods, it is not possible to physically "return" the product. Therefore, we do not offer any refund or exchange once the purchase has been made. No exceptions, all sales are final, except where a refund is required by law or provided by Naturl Audio.
+9. Support
+
+During a valid license or RTO term, Naturl Audio will use commercially reasonable efforts to provide email support for supported versions/platforms.
+10. Export Compliance
+
+You must comply with U.S. and other applicable export/sanctions laws. The Software may not be used, downloaded, or exported (a) to embargoed countries or (b) by persons on U.S. denied/restricted-party lists.
+11. Limited Warranty; Disclaimer
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITH ALL FAULTS. NATURL AUDIO DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. NATURL AUDIO DOES NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED, OR THAT DEFECTS WILL BE CORRECTED.
+12. Limitation of Liability
+
+IF YOU ACQUIRED THE SOFTWARE OUTSIDE EUROPE, THEN THIS SECTION 12.1 SHALL APPLY:
+
+12.1 TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL NATURL AUDIO, ITS SUPPLIERS OR LICENSORS BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, INDIRECT, CONSEQUENTIAL, OR SPECIAL DAMAGES, INCLUDING LOST PROFITS, BUSINESS INTERRUPTION, DAMAGED EQUIPMENT, OR LOST INFORMATION) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE OR THIRD PARTY MATERIALS, EVEN IF NATURL AUDIO HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+ONLY IF YOU ACQUIRED THE SOFTWARE IN EUROPE, THEN THIS SECTION 12.2 SHALL APPLY:
+
+12.2 Naturl Audio shall only be liable without restriction according to the statutory provisions for damages of the Licensee caused by intentional or gross negligent conduct of Naturl Audio or its agents. The same applies to personal injury and damages according to applicable law.
+13. Indemnity by You
+
+You agree to defend, indemnify, and hold harmless Naturl Audio and its affiliates from third-party claims arising from your breach of this EULA or unlawful use of the Software.
+14. Term; Termination
+
+This EULA continues for the applicable license term unless terminated. Naturl Audio may suspend or terminate immediately for material breach (including non-payment, circumvention, or piracy). Upon termination, you must cease use, uninstall, and destroy all copies and License Keys. Sections intended to survive (including SS2-4, 6-14, 16-18) survive termination.
+15. Assignment; Transfer
+
+You may not assign, resell, or transfer the license or License Key without Naturl Audio's prior written consent. Naturl Audio may allow a one-time transfer of a perpetual per-user license upon (i) written request, (ii) payment of a reasonable processing fee, and (iii) deactivation/removal from your Devices. NFR, Evaluation, Educational, Beta, and RTO licenses are not transferable.
+16. Governing Law; Dispute Resolution (Arbitration in Texas)
+
+16.1 Governing Law. This EULA is governed by the laws of the State of Delaware, U.S.A., excluding conflict rules and the U.N. CISG. The U.S. Federal Arbitration Act (FAA) governs the interpretation and enforcement of SS16.2.
+
+16.2 Binding Arbitration (U.S./Canada; excludes where prohibited). Any dispute, claim, or controversy arising out of or related to this EULA or the Software will be resolved by binding arbitration administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules, conducted in Travis County, Texas by a single arbitrator. Either party may seek individual relief in small-claims court for qualifying claims. Class/representative actions and class arbitrations are not permitted. You may opt out of arbitration by sending written notice to legal@naturl.audio within 30 days after you first accept this EULA.
+
+16.3 Non-U.S. Consumers. If you are a consumer residing outside the U.S./Canada, SS16.2 does not apply unless you affirmatively consent after a dispute arises.
+17. Miscellaneous
+
+17.1 Entire Agreement; Order of Precedence. This EULA and any order form constitute the entire agreement for the Software and supersede prior terms.
+
+17.2 Severability; Waiver. If any provision is unenforceable, it will be modified to the minimum extent necessary; the rest remains in effect. Failure to enforce is not a waiver.
+
+17.3 Force Majeure. Neither party is liable for delays due to causes beyond reasonable control.
+
+17.4 Updates to EULA. For RTO or services, Naturl Audio may update this EULA prospectively with reasonable notice for material changes.
+
+17.5 Notices. Legal notices to Naturl Audio: legal@naturl.audio (and to your billing email/address on record).
+18. Open-Source Notices
+
+Open-source components (if any) are provided under their own licenses as identified in the product; those terms govern the open-source components.
